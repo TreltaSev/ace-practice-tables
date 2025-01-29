@@ -2,8 +2,8 @@
 	import { Table } from '@ui';
 </script>
 
-<!-- Table 1 -->
-<Table._ class="" headCellClassName="pr-8">
+<!-- Table 2 -->
+<Table._ class="" caption="STUDENTS MARK SHEET" headCellClassName="pr-8">
     <Table.Head headers={['Name', 'Maths', 'Science', 'English', 'Physics', 'General Knowledge']} />
     <Table.Body>
         <Table.Row data={['David', 85, 87, 88, 92, 88]} />
