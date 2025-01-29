@@ -1,0 +1,1 @@
+export { default as Table1 } from "./table-1.svelte"
