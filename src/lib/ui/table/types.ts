@@ -28,6 +28,8 @@ export type tTableBodyProps = HTMLAttributes<HTMLTableSectionElement> & {
 export type tTableCellProps = HTMLAttributes<HTMLTableCellElement> & {
 	data?: undefined | string | number;
 	header?: undefined | string;
+	rowspan?: number;
+	colspan?: number;
 };
 
 export type tTableHeadHeaders = string[];
