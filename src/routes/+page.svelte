@@ -1,21 +1,12 @@
 <script lang="ts">
-	import { Flex, Table } from '@ui';
-	import { tables } from '@lib/components/tables';
-	import clsx from 'clsx';
-
+	import { Flex, SpeedDial } from '@ui';
 </script>
 
-<Table.Selector>1</Table.Selector>
 
-<Flex.Col class="size-full items-center justify-center gap-5">
-	{#each tables as Table}
-		<svelte:component this={Table}/>
-	{/each}
+<Flex.Col class="size-full items-center justify-center gap-5 overflow-scroll">
+	<SpeedDial._>
+		<SpeedDial.Item>
+			1
+		</SpeedDial.Item>
+	</SpeedDial._>	
 </Flex.Col>
-
-
-<!--
-align_items:c enter
-justify_content
-
--->
