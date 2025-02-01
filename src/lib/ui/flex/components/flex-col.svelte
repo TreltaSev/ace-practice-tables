@@ -4,11 +4,13 @@
 
 	// -=-=-=-=- Props -=-=-=-=- //
 	type $$Props = Props;
-	
+
 	let className: $$Props['class'] = undefined;
-	export { className as class }
+	export { className as class };
+
+	export let el: HTMLDivElement;
 </script>
 
-<div class={cn('flex flex-col', className)} {...$$restProps}>
+<div bind:this={el} class={cn('flex flex-col', className)} {...$$restProps}>
 	<slot />
 </div>

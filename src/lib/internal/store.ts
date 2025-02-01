@@ -1,4 +1,5 @@
-import { writable, type Writable, type Subscriber, type Unsubscriber, type Updater } from "svelte/store";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { writable, type Writable, type Subscriber, type Unsubscriber, type Updater} from "svelte/store";
 
 export class ToggleableWritable implements Writable<boolean> {
     private store: Writable<boolean>
@@ -35,4 +36,15 @@ export class ToggleableWritable implements Writable<boolean> {
 
 export function toggle_writable(initialValue: boolean): ToggleableWritable {
     return new ToggleableWritable(initialValue);
+}
+
+type Options = Record<string, Writable<unknown>>;
+export function getOptionUpdater(options: Options) {
+    return function(key: keyof typeof options, value: any) {
+        if (value === undefined) return;
+        const store = options[key];
+        if (store) {
+            store.set(value as never)
+        }
+    }
 }
