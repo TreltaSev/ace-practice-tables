@@ -1,5 +1,5 @@
 # ACE Practice Assignment
-## Tables Site
+## Tables Site (DONE)
 
 Create a website that contains an example of each of the following 12 `HTML` table examples. Your website should be visually appealing, each paragraph should describe the elements, properties, `CSS`, etc. used to create the table, make it fun. Use your Gisted notes to explain tables; this site will be used as a study reference for the test. 
 Using the following examples, you will practice what you have learned in `Chapter 5: HTML Tables`. Students will practice HTML Table attributes, use various CSS properties to enhance their HTML Table and CSS knowledge. These examples will help users to understand following scenarios:
