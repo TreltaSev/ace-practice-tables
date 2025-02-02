@@ -9,9 +9,12 @@
 	import type { ToggleableWritable } from '@lib/internal';
 	import { cn } from '@lib/utils';
 	import { tables } from '@lib/components/tables';
+	import { global_mode$ } from '@lib/stores/mode';
+	import type { Writable } from 'svelte/store';
+
+	let mode$: Writable<'dark' | 'light' | string> = global_mode$.mode$;
 
 	let parentActive$: ToggleableWritable;
-
 </script>
 
 <Flex.Col class="size-full items-center justify-center gap-5 overflow-scroll">
@@ -22,15 +25,28 @@
 		parent
 	>
 		<!-- Main Anchor -->
-		<SpeedDial.Item slot="anchor" class="group [&>svg]:transition-all [&>svg]:ease-in-out bg-primary-500 hover:bg-primary-400 text-white">
+		<SpeedDial.Item
+			slot="anchor"
+			class="group [&>svg]:transition-all [&>svg]:ease-in-out bg-primary-500 hover:bg-primary-400 text-gray-300"
+		>
 			<AddIcon
-				class={cn('shrink-0 text-white group-hover:rotate-20', $parentActive$ && "group-hover:-rotate-30")}
+				class={cn(
+					'shrink-0 text-white group-hover:rotate-20',
+					$parentActive$ && 'group-hover:-rotate-30'
+				)}
 			/>
 		</SpeedDial.Item>
 
 		<!-- dark/light mode -->
-		<SpeedDial.Item class="bg-primary-800 hover:bg-primary-700">
-			<LightMode class="shrink-0 text-gray-300" />
+		<SpeedDial.Item
+			class="bg-primary-800 hover:bg-primary-700"
+			on:click={() => global_mode$.toggle()}
+		>
+			{#if $mode$ == 'dark'}
+				<LightMode class="shrink-0 text-gray-300" />
+			{:else}
+				<DarkMode class="shrink-0 text-gray-300" />
+			{/if}
 		</SpeedDial.Item>
 
 		<!-- Tables -->
@@ -40,7 +56,7 @@
 			</SpeedDial.Item>
 			{#each tables as table, index}
 				<SpeedDial.Item class="bg-primary-700 hover:bg-primary-600 text-gray-300">
-					<span class="font-sans">{index+1}</span>
+					<span class="font-sans text-gray-300">{index + 1}</span>
 				</SpeedDial.Item>
 			{/each}
 		</SpeedDial.Menu>

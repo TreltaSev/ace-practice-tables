@@ -10,6 +10,7 @@
 	export let el: $$Props['el'] = undefined;
 </script>
 
-<div bind:this={el} class={cn('flex', className)} {...$$restProps}>
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div bind:this={el} class={cn('flex', className)} {...$$restProps} on:click>
 	<slot />
 </div>

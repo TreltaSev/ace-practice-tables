@@ -18,6 +18,6 @@
 
 </script>
 
-<Flex.Col class={cn(ITEM_CLASS, className)}>
+<Flex.Col class={cn(ITEM_CLASS, className)} {...$$restProps} on:click>
 	<slot />
 </Flex.Col>

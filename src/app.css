@@ -20,3 +20,5 @@
         @apply text-gray-900 dark:text-white
     }
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
