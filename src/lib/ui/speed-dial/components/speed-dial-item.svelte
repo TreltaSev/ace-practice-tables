@@ -8,7 +8,7 @@
 	import { onDestroy, onMount } from 'svelte';
 
  	// -=-=-=-=- Static Classes -=-=-=-=- //
-    const ITEM_CLASS = "hover:bg-stone-100 bg-amber-300 shrink-0 transition-all ease-in cursor-pointer w-10 h-10 rounded-full items-center justify-center text-primary-950"
+    const ITEM_CLASS = "hover:bg-stone-100 bg-gray-300 shrink-0 transition-all ease-in cursor-pointer w-10 h-10 rounded-full items-center justify-center"
 
 	// -=-=-=-=- Props -=-=-=-=- //
 	type $$Props = ItemProps & tFlexProps;
@@ -18,6 +18,6 @@
 
 </script>
 
-<Flex.Col class={cn(ITEM_CLASS)}>
+<Flex.Col class={cn(ITEM_CLASS, className)}>
 	<slot />
 </Flex.Col>

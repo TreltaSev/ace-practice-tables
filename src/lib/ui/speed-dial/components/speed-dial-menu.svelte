@@ -13,8 +13,8 @@
 
 	// -=-=-=-=- Props -=-=-=-=- //
 	type $$Props = MenuProps;
-	export let className: $$Props['class'] = undefined
-	export let anchorClass: $$Props['anchorClass'] = undefined
+	export let className: $$Props['class'] = undefined;
+	export let anchorClass: $$Props['anchorClass'] = undefined;
 	export let direction: $$Props['direction'] = 'left';
 	export let anchor: $$Props['anchor'] = '';
 	export let parent: boolean | undefined = undefined;
@@ -22,7 +22,7 @@
 
 	export { className as class };
 
-	let { isActive$ } = setCtx();
+	export let { isActive$ } = setCtx();
 
 	const menu_class: ClassValue[] = [
 		'flex bottom-0 transition-all ease-in-out duration-500 box-border',
@@ -45,10 +45,7 @@
 	}
 </script>
 
-<div bind:this={anchor} class={cn(
-	"relative",
-	anchorClass
-)}>
+<div bind:this={anchor} class={cn('relative', anchorClass)}>
 	<button bind:this={anchor} class="relative z-1" on:click={() => isActive$.toggle()}>
 		<slot name="anchor" />
 	</button>
@@ -62,7 +59,8 @@
 		...menu_class,
 		$isActive$ && `visible p${['left', 'right'].includes(direction || '') ? 'x' : 'y'}-5 gap-2.5`,
 		!$isActive$ &&
-			`opacity-0 p${['left', 'right'].includes(direction || '') ? 'x' : 'y'}-1 gap-0 invisible`
+			`opacity-0 p${['left', 'right'].includes(direction || '') ? 'x' : 'y'}-1 gap-0 invisible`,
+		className
 	)}
 >
 	<slot />
