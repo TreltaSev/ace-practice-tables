@@ -10,14 +10,24 @@
 	import { cn } from '@lib/utils';
 	import { tables } from '@lib/components/tables';
 	import { global_mode$ } from '@lib/stores/mode';
-	import type { Writable } from 'svelte/store';
+	import { writable, type Writable } from 'svelte/store';
 
 	let mode$: Writable<'dark' | 'light' | string> = global_mode$.mode$;
 
 	let parentActive$: ToggleableWritable;
+	let currentTable$: Writable<number> = writable(0);
+
+	function change_table(index: number): void  {
+		currentTable$.set(index)
+	}
+
 </script>
 
-<Flex.Col class="size-full items-center justify-center gap-5 overflow-scroll">
+<Flex.Col class="size-full items-center justify-center gap-5 overflow-scroll select-none">
+
+	<svelte:component this={tables[$currentTable$]}/>
+
+	<!-- Speed Dial -->
 	<SpeedDial.Menu
 		bind:isActive$={parentActive$}
 		direction="left"
@@ -55,7 +65,7 @@
 				<WindowIcon class="shrink-0 text-gray-300" />
 			</SpeedDial.Item>
 			{#each tables as table, index}
-				<SpeedDial.Item class="bg-primary-700 hover:bg-primary-600 text-gray-300">
+				<SpeedDial.Item class="bg-primary-700 hover:bg-primary-600 text-gray-300" on:click={() => change_table(index)}>
 					<span class="font-sans text-gray-300">{index + 1}</span>
 				</SpeedDial.Item>
 			{/each}
