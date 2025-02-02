@@ -45,6 +45,7 @@
     "clsx": "^2.1.1",
     "grunt": "^1.6.1",
     "rollup": "^4.32.1",
+    "svelte-portal": "^2.2.1",
     "tablesproject": "file:",
     "tailwind-merge": "^2.6.0",
     "tailwindcss": "^4.0.0"

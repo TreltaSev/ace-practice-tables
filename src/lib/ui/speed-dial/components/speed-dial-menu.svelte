@@ -1,32 +1,69 @@
 <script lang="ts">
 	import { cn } from '@lib/utils';
 	import type { MenuProps } from '..';
+	import { portal } from 'svelte-portal';
 
-    import { Flex } from "@ui"
-    import { type Props as tFlexProps } from '@ui/flex';
+	import { setCtx } from '../ctx';
+	import type { ClassValue } from 'clsx';
+	import { getContext, setContext } from 'svelte';
+	import { type ToggleableWritable } from '@lib/internal';
 
-    import { getCtx } from '../ctx';
-	import { get } from 'svelte/store';
-
-    // -=-=-=-=- Static Classes -=-=-=-=- //
-    const MENU_CLASS = "absolute top-0 right-0 h-10 bg-white transition-all ease-in z-1"
+	// -=-=-=-=- Get Contexts -=-=-=-=- //
+	let parentActive$: ToggleableWritable | undefined = getContext('parentActive$');
 
 	// -=-=-=-=- Props -=-=-=-=- //
 	type $$Props = MenuProps;
-    type $$FlexProps = tFlexProps;
+	export let className: $$Props['class'] = undefined
+	export let anchorClass: $$Props['anchorClass'] = undefined
+	export let direction: $$Props['direction'] = 'left';
+	export let anchor: $$Props['anchor'] = '';
+	export let parent: boolean | undefined = undefined;
+	let menu: HTMLDivElement;
 
-	let className: $$Props['class'] = undefined;
-    let el: $$FlexProps['el'] = undefined;
-	export { className as class }
+	export { className as class };
 
-    const { isActive$, itemCount$, speedDialSize$ } = getCtx();
+	let { isActive$ } = setCtx();
 
+	const menu_class: ClassValue[] = [
+		'flex bottom-0 transition-all ease-in-out duration-500 box-border',
+		direction == 'up' && 'flex-col bottom-full py-5',
+		direction == 'right' && 'flex-row left-full px-5',
+		direction == 'down' && 'flex-col top-full py-5',
+		direction == 'left' && 'flex-row right-full px-5'
+	];
 
-    
-
-
+	// Close all children menus
+	if (parent) {
+		parentActive$ = isActive$;
+		setContext('parentActive$', parentActive$);
+	} else {
+		parentActive$?.subscribe((v) => {
+			if (!v) {
+				isActive$.set(v);
+			}
+		});
+	}
 </script>
 
-<Flex.Row bind:el class={cn('box-border pr-10 w-10', MENU_CLASS, className, $isActive$ && `w-${get(speedDialSize$)}`)} {...$$restProps}>
+<div bind:this={anchor} class={cn(
+	"relative",
+	anchorClass
+)}>
+	<button bind:this={anchor} class="relative z-1" on:click={() => isActive$.toggle()}>
+		<slot name="anchor" />
+	</button>
+</div>
+
+<div
+	bind:this={menu}
+	use:portal={anchor}
+	class={cn(
+		'w-fit h-fit absolute z-0',
+		...menu_class,
+		$isActive$ && `visible p${['left', 'right'].includes(direction || '') ? 'x' : 'y'}-5 gap-2.5`,
+		!$isActive$ &&
+			`opacity-0 p${['left', 'right'].includes(direction || '') ? 'x' : 'y'}-1 gap-0 invisible`
+	)}
+>
 	<slot />
-</Flex.Row>
+</div>
